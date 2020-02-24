@@ -9,8 +9,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var currentPosition: CGSize = .zero
+    @State var newPosition: CGSize = .zero
+    
     var body: some View {
-        Text("Hello, World!")
+        Circle()
+            .frame(width: 100, height: 100)
+            .foregroundColor(Color.red)
+            .offset(x: self.currentPosition.width, y: self.currentPosition.height)
+        
+            .gesture(DragGesture()
+                .onChanged { value in
+                    self.currentPosition =
+                        CGSize(width: value.translation.width + self.newPosition.width, height: value.translation.height + self.newPosition.height)
+                }
+                .onEnded { value in
+                    self.currentPosition =
+                        CGSize(width: value.translation.width + self.newPosition.width, height: value.translation.height + self.newPosition.height)
+                    
+                    self.newPosition = self.currentPosition
+                
+                }
+            
+            )
+        
+        
+        
     }
 }
 
